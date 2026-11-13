@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday, Anna ✨ | All My Love, Theo</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom JS (Config & Logic) -->
+    <script src="script.js"></script>
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- Google Fonts: Playfair Display, Caveat, Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="relative min-h-screen selection:bg-blush-200">
+
+    <!-- Background Particle Canvas -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Floating Audio Player Bar -->
+    <div class="fixed bottom-5 right-5 z-40">
+        <div
+            class="flex items-center gap-3 bg-white/90 backdrop-blur-md px-4 py-2.5 rounded-full border border-blush-200 shadow-cozy">
+            <button id="audio-toggle-btn"
+                class="w-10 h-10 rounded-full bg-blush-400 hover:bg-blush-500 text-white flex items-center justify-center transition shadow-md active:scale-95"
+                title="Play romantic song">
+                <i id="audio-icon" class="fa-solid fa-play text-sm ml-0.5"></i>
+            </button>
+            <div class="pr-2 hidden sm:block">
+                <p class="text-xs font-semibold text-romanticDark leading-tight">Theo's Melody for Anna</p>
+                <p id="audio-status" class="text-[10px] text-romanticMuted">Click to play ambient melody</p>
+            </div>
+            <!-- Animated Soundwave indicator -->
+            <div id="sound-wave" class="hidden items-end gap-0.5 h-4 w-6">
+                <span class="w-1 bg-blush-400 rounded animate-[pulse_1s_ease-in-out_infinite] h-3"></span>
+                <span class="w-1 bg-blush-500 rounded animate-[pulse_0.7s_ease-in-out_infinite] h-4"></span>
+                <span class="w-1 bg-blush-300 rounded animate-[pulse_1.2s_ease-in-out_infinite] h-2"></span>
+                <span class="w-1 bg-blush-400 rounded animate-[pulse_0.9s_ease-in-out_infinite] h-3.5"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation / Top Header -->
+    <header class="relative z-10 w-full max-w-5xl mx-auto pt-6 px-6 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <span class="text-blush-500 text-xl font-handwriting text-2xl font-bold tracking-wide">A & T</span>
+            <span class="text-warmGold text-xs uppercase tracking-widest font-sans font-medium">Forever</span>
+        </div>
+        <div class="flex items-center gap-4 text-sm font-handwriting text-xl text-romanticDark">
+            <span class="bg-blush-100/90 text-blush-600 px-3 py-1 rounded-full border border-blush-200">
+                <i class="fa-solid fa-heart mr-1.5 text-xs"></i>Anna's Day
+            </span>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 pt-10 pb-24 space-y-24">
+
+        <!-- ==========================================
+         HERO SECTION: Greeting & Live Counter
+         ========================================== -->
+        <section class="text-center pt-6 sm:pt-12">
+            <!-- Badge -->
+            <div
+                class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cream-50 border border-blush-200 shadow-sm mb-6 animate-float">
+                <span class="w-2 h-2 rounded-full bg-blush-400 animate-ping"></span>
+                <span class="font-handwriting text-lg text-romanticMuted">A dedicated space for the prettiest
+                    soul</span>
+                <i class="fa-solid fa-sparkles text-warmGold text-xs"></i>
+            </div>
+
+            <h1
+                class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold text-romanticDark tracking-tight leading-[1.15] mb-5">
+                Happy Birthday, <br class="sm:hidden" />
+                <span class="italic font-normal text-blush-500 relative inline-block">
+                    My Beautiful Anna
+                    <svg class="absolute -bottom-2 left-0 w-full text-blush-300" viewBox="0 0 250 12" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 9C50 3 180 3 247 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                    </svg>
+                </span>
+                ✨
+            </h1>
+
+            <p class="font-serif italic text-lg sm:text-xl text-romanticMuted max-w-2xl mx-auto leading-relaxed mb-10">
+                "Out of 8 billion people, God gave me you. I'm endlessly lucky because the world became a
+                gentler, more magical place on the day you were born."
+            </p>
+
+            <!-- Theo's Signature Tag -->
+            <div class="mb-12">
+                <p class="font-handwriting text-2xl text-romanticDark/80">With all my love & heart — Theo</p>
+            </div>
+
+            <!-- Live Counter Card -->
+            <div
+                class="max-w-3xl mx-auto bg-cream-50/90 backdrop-blur-sm rounded-3xl p-6 sm:p-8 border border-blush-200/80 shadow-cozy relative overflow-hidden">
+                <div
+                    class="absolute -top-10 -right-10 w-32 h-32 bg-blush-100 rounded-full blur-2xl pointer-events-none">
+                </div>
+                <div
+                    class="absolute -bottom-10 -left-10 w-32 h-32 bg-cream-300/40 rounded-full blur-2xl pointer-events-none">
+                </div>
+
+                <div class="flex items-center justify-center gap-2 mb-2 text-blush-500">
+                    <i class="fa-solid fa-heart text-xs"></i>
+                    <span class="font-handwriting text-xl sm:text-2xl text-romanticDark font-semibold">Our Journey
+                        Together</span>
+                    <i class="fa-solid fa-heart text-xs"></i>
+                </div>
+
+                <p class="text-xs uppercase tracking-widest text-romanticMuted mb-6 font-medium">
+                    Falling deeper in love with you since February 20, 2024
+                </p>
+
+                <!-- Counter Grid -->
+                <div class="grid grid-cols-4 gap-2 sm:gap-4 max-w-xl mx-auto">
+                    <div class="bg-white/80 p-3 sm:p-4 rounded-2xl border border-blush-100 text-center shadow-sm">
+                        <span id="counter-days"
+                            class="block font-serif text-2xl sm:text-4xl font-bold text-romanticDark">0</span>
+                        <span
+                            class="text-[11px] sm:text-xs font-medium text-romanticMuted uppercase tracking-wider">Days</span>
+                    </div>
+                    <div class="bg-white/80 p-3 sm:p-4 rounded-2xl border border-blush-100 text-center shadow-sm">
+                        <span id="counter-hours"
+                            class="block font-serif text-2xl sm:text-4xl font-bold text-romanticDark">0</span>
+                        <span
+                            class="text-[11px] sm:text-xs font-medium text-romanticMuted uppercase tracking-wider">Hours</span>
+                    </div>
+                    <div class="bg-white/80 p-3 sm:p-4 rounded-2xl border border-blush-100 text-center shadow-sm">
+                        <span id="counter-minutes"
+                            class="block font-serif text-2xl sm:text-4xl font-bold text-romanticDark">0</span>
+                        <span
+                            class="text-[11px] sm:text-xs font-medium text-romanticMuted uppercase tracking-wider">Minutes</span>
+                    </div>
+                    <div class="bg-white/80 p-3 sm:p-4 rounded-2xl border border-blush-100 text-center shadow-sm">
+                        <span id="counter-seconds"
+                            class="block font-serif text-2xl sm:text-4xl font-bold text-blush-500">0</span>
+                        <span
+                            class="text-[11px] sm:text-xs font-medium text-romanticMuted uppercase tracking-wider">Seconds</span>
+                    </div>
+                </div>
+
+                <p class="font-handwriting text-lg sm:text-xl text-romanticDark/70 mt-6">
+                    ...and counting every single precious moment with you.
+                </p>
+            </div>
+        </section>
+
+        <!-- ==========================================
+         INTERACTIVE BIRTHDAY CAKE & WISH SECTION
+         ========================================== -->
+        <section class="max-w-2xl mx-auto text-center">
+            <div
+                class="bg-white/80 backdrop-blur-md rounded-3xl p-8 sm:p-10 border border-blush-200/90 shadow-cozy relative">
+                <h2 class="font-serif text-2xl sm:text-3xl font-bold text-romanticDark mb-2">
+                    Make a Birthday Wish, Anna 🎂
+                </h2>
+                <p class="font-handwriting text-xl text-romanticMuted mb-8">
+                    Close your eyes, think of the sweetest dream, and click to blow out the candle!
+                </p>
+
+                <!-- CSS Cake Illustration -->
+                <div class="relative w-48 h-44 mx-auto mb-8 flex flex-col items-center justify-end">
+
+                    <!-- Candle -->
+                    <div class="relative flex flex-col items-center z-20 cursor-pointer group" id="cake-candle-trigger"
+                        onclick="blowCandle()">
+                        <!-- Flame & Glow -->
+                        <div id="candle-flame"
+                            class="w-4 h-7 rounded-full bg-gradient-to-t from-amber-500 via-yellow-300 to-white shadow-candle flame-active transition-all duration-500">
+                        </div>
+                        <!-- Smoke (hidden initially) -->
+                        <div id="candle-smoke" class="smoke absolute -top-8 text-slate-400 font-sans text-xs">
+                            <i class="fa-solid fa-cloud"></i>
+                        </div>
+                        <!-- Wick -->
+                        <div class="w-0.5 h-2 bg-stone-700"></div>
+                        <!-- Candle Stick -->
+                        <div
+                            class="w-3.5 h-10 bg-gradient-to-r from-blush-200 via-white to-blush-300 rounded-t-sm shadow-sm border border-blush-300">
+                        </div>
+                    </div>
+
+                    <!-- Top Cake Tier -->
+                    <div
+                        class="w-28 h-10 bg-cream-200 rounded-t-xl border-t-4 border-blush-300 relative shadow-inner z-10 flex items-center justify-around px-2">
+                        <span class="w-2 h-2 rounded-full bg-blush-400"></span>
+                        <span class="w-2 h-2 rounded-full bg-warmGold"></span>
+                        <span class="w-2 h-2 rounded-full bg-blush-400"></span>
+                    </div>
+
+                    <!-- Bottom Cake Tier -->
+                    <div
+                        class="w-44 h-16 bg-cream-100 rounded-t-2xl border-t-4 border-blush-400 relative shadow-md z-0 flex items-center justify-between px-4">
+                        <div class="w-full h-2 bg-blush-200/60 rounded-full"></div>
+                    </div>
+
+                    <!-- Plate -->
+                    <div
+                        class="w-52 h-4 bg-gradient-to-r from-stone-200 via-white to-stone-200 rounded-full shadow-md -mt-1 border border-stone-200">
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <button id="blow-btn" onclick="blowCandle()"
+                    class="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-blush-400 hover:bg-blush-500 text-white font-medium shadow-md transition duration-200 transform hover:scale-105 active:scale-95">
+                    <i class="fa-solid fa-wind"></i>
+                    <span>Blow Out Your Birthday Candle</span>
+                </button>
+
+                <!-- Wish Confirmation Banner (Hidden by default) -->
+                <div id="wish-revealed"
+                    class="hidden mt-6 p-5 rounded-2xl bg-blush-100/90 border border-blush-300 animate-[fadeIn_0.6s_ease-out]">
+                    <p class="font-serif italic text-lg sm:text-xl text-blush-600 font-semibold mb-1">
+                        "May all your quiet wishes and wildest dreams come true."
+                    </p>
+                    <p class="font-handwriting text-xl text-romanticDark">
+                        Every candle blown is a promise from Theo to make you smile every day.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+         "OPEN WHEN..." ENVELOPES SECTION
+         ========================================== -->
+        <section>
+            <div class="text-center mb-12">
+                <span class="text-xs uppercase tracking-widest text-warmGold font-semibold">Special Letters For
+                    You</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-romanticDark mt-1 mb-2">
+                    "Open When..." Letters 💌
+                </h2>
+                <p class="font-handwriting text-2xl text-romanticMuted">
+                    Click any envelope whenever your heart desires a reminder
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <!-- Envelope 1 -->
+                <div onclick="openLetter(0)"
+                    class="envelope-card cursor-pointer bg-white/90 rounded-2xl p-6 border border-blush-200 shadow-cozy flex flex-col items-center text-center relative group">
+                    <div
+                        class="w-14 h-14 rounded-full bg-blush-100 flex items-center justify-center text-blush-500 mb-4 group-hover:bg-blush-400 group-hover:text-white transition">
+                        <i class="fa-solid fa-sun text-2xl"></i>
+                    </div>
+                    <span class="text-[11px] uppercase tracking-wider text-warmGold font-semibold mb-1">Envelope
+                        #1</span>
+                    <h3 class="font-serif font-bold text-lg text-romanticDark mb-2">Open on your Birthday Morning</h3>
+                    <p class="text-xs text-romanticMuted leading-relaxed">A celebration of the first breath you took and
+                        how it changed my life forever.</p>
+                    <span
+                        class="mt-4 font-handwriting text-lg text-blush-500 flex items-center gap-1 group-hover:translate-x-1 transition">
+                        Read note <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </span>
+                </div>
+
+                <!-- Envelope 2 -->
+                <div onclick="openLetter(1)"
+                    class="envelope-card cursor-pointer bg-white/90 rounded-2xl p-6 border border-blush-200 shadow-cozy flex flex-col items-center text-center relative group">
+                    <div
+                        class="w-14 h-14 rounded-full bg-blush-100 flex items-center justify-center text-blush-500 mb-4 group-hover:bg-blush-400 group-hover:text-white transition">
+                        <i class="fa-solid fa-heart-pulse text-2xl"></i>
+                    </div>
+                    <span class="text-[11px] uppercase tracking-wider text-warmGold font-semibold mb-1">Envelope
+                        #2</span>
+                    <h3 class="font-serif font-bold text-lg text-romanticDark mb-2">Open when you miss me</h3>
+                    <p class="text-xs text-romanticMuted leading-relaxed">A warm reminder that no matter the distance,
+                        my heart never leaves your side.</p>
+                    <span
+                        class="mt-4 font-handwriting text-lg text-blush-500 flex items-center gap-1 group-hover:translate-x-1 transition">
+                        Read note <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </span>
+                </div>
+
+                <!-- Envelope 3 -->
+                <div onclick="openLetter(2)"
+                    class="envelope-card cursor-pointer bg-white/90 rounded-2xl p-6 border border-blush-200 shadow-cozy flex flex-col items-center text-center relative group">
+                    <div
+                        class="w-14 h-14 rounded-full bg-blush-100 flex items-center justify-center text-blush-500 mb-4 group-hover:bg-blush-400 group-hover:text-white transition">
+                        <i class="fa-solid fa-face-smile-beam text-2xl"></i>
+                    </div>
+                    <span class="text-[11px] uppercase tracking-wider text-warmGold font-semibold mb-1">Envelope
+                        #3</span>
+                    <h3 class="font-serif font-bold text-lg text-romanticDark mb-2">Open when you need a smile</h3>
+                    <p class="text-xs text-romanticMuted leading-relaxed">Little inside jokes, silly memories, and why
+                        your laughter is my favorite song.</p>
+                    <span
+                        class="mt-4 font-handwriting text-lg text-blush-500 flex items-center gap-1 group-hover:translate-x-1 transition">
+                        Read note <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </span>
+                </div>
+
+                <!-- Envelope 4 -->
+                <div onclick="openLetter(3)"
+                    class="envelope-card cursor-pointer bg-white/90 rounded-2xl p-6 border border-blush-200 shadow-cozy flex flex-col items-center text-center relative group">
+                    <div
+                        class="w-14 h-14 rounded-full bg-blush-100 flex items-center justify-center text-blush-500 mb-4 group-hover:bg-blush-400 group-hover:text-white transition">
+                        <i class="fa-solid fa-moon text-2xl"></i>
+                    </div>
+                    <span class="text-[11px] uppercase tracking-wider text-warmGold font-semibold mb-1">Envelope
+                        #4</span>
+                    <h3 class="font-serif font-bold text-lg text-romanticDark mb-2">Open for a midnight secret</h3>
+                    <p class="text-xs text-romanticMuted leading-relaxed">A whisper under the moonlight about our future
+                        dreams and eternal adventures.</p>
+                    <span
+                        class="mt-4 font-handwriting text-lg text-blush-500 flex items-center gap-1 group-hover:translate-x-1 transition">
+                        Read note <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </span>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==========================================
+         POLAROID / MEMORY SCRAPBOOK
+         ========================================== -->
+        <section>
+            <div class="text-center mb-12">
+                <span class="text-xs uppercase tracking-widest text-warmGold font-semibold">Fragments of Forever</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-romanticDark mt-1 mb-2">
+                    Our Little Scrapbook 📸
+                </h2>
+                <p class="font-handwriting text-2xl text-romanticMuted">
+                    A glimpse into the memories that make my life so colorful
+                </p>
+            </div>
+
+            <!-- Polaroid Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-6 pt-4">
+
+                <!-- Polaroid 1 -->
+                <div
+                    class="relative bg-white p-4 pb-6 rounded-md shadow-polaroid transform -rotate-2 hover:rotate-0 transition duration-300">
+                    <div class="washi-tape"></div>
+                    <div class="aspect-square bg-cream-100 rounded overflow-hidden mb-4 relative group">
+                        <img id="polaroid-img-1"
+                            src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=700&q=80"
+                            alt="Sunset with Anna"
+                            class="w-full h-full object-cover transition duration-500 group-hover:scale-105" />
+                        <label for="upload-1"
+                            class="absolute bottom-2 right-2 bg-black/60 hover:bg-black/80 text-white p-2 rounded-full cursor-pointer text-xs transition"
+                            title="Swap with our photo">
+                            <i class="fa-solid fa-camera"></i>
+                        </label>
+                        <input type="file" id="upload-1" accept="image/*" class="hidden"
+                            onchange="previewImage(event, 'polaroid-img-1')">
+                    </div>
+                    <p class="font-handwriting text-2xl text-romanticDark text-center font-bold">Our Future</p>
+                    <p class="font-handwriting text-lg text-romanticMuted text-center">Looking forward to forever with you ✨</p>
+                </div>
+
+                <!-- Polaroid 2 -->
+                <div
+                    class="relative bg-white p-4 pb-6 rounded-md shadow-polaroid transform rotate-2 hover:rotate-0 transition duration-300">
+                    <div class="washi-tape washi-tape-right"></div>
+                    <div class="aspect-square bg-cream-100 rounded overflow-hidden mb-4 relative group">
+                        <img id="polaroid-img-2"
+                            src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=700&q=80"
+                            alt="Quiet coffee date"
+                            class="w-full h-full object-cover transition duration-500 group-hover:scale-105" />
+                        <label for="upload-2"
+                            class="absolute bottom-2 right-2 bg-black/60 hover:bg-black/80 text-white p-2 rounded-full cursor-pointer text-xs transition"
+                            title="Swap with our photo">
+                            <i class="fa-solid fa-camera"></i>
+                        </label>
+                        <input type="file" id="upload-2" accept="image/*" class="hidden"
+                            onchange="previewImage(event, 'polaroid-img-2')">
+                    </div>
+                    <p class="font-handwriting text-2xl text-romanticDark text-center font-bold">That Soft, Cozy Smile
+                    </p>
+                    <p class="font-handwriting text-lg text-romanticMuted text-center">The one that melts all my worries
+                        away 🌸</p>
+                </div>
+
+                <!-- Polaroid 3 -->
+                <div
+                    class="relative bg-white p-4 pb-6 rounded-md shadow-polaroid transform -rotate-1 hover:rotate-0 transition duration-300">
+                    <div class="washi-tape"></div>
+                    <div class="aspect-square bg-cream-100 rounded overflow-hidden mb-4 relative group">
+                        <img id="polaroid-img-3"
+                            src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=700&q=80"
+                            alt="Hand in hand"
+                            class="w-full h-full object-cover transition duration-500 group-hover:scale-105" />
+                        <label for="upload-3"
+                            class="absolute bottom-2 right-2 bg-black/60 hover:bg-black/80 text-white p-2 rounded-full cursor-pointer text-xs transition"
+                            title="Swap with our photo">
+                            <i class="fa-solid fa-camera"></i>
+                        </label>
+                        <input type="file" id="upload-3" accept="image/*" class="hidden"
+                            onchange="previewImage(event, 'polaroid-img-3')">
+                    </div>
+                    <p class="font-handwriting text-2xl text-romanticDark text-center font-bold">Every Little Walk With
+                        You</p>
+                    <p class="font-handwriting text-lg text-romanticMuted text-center">My favorite place is right beside
+                        you 🕊️</p>
+                </div>
+
+            </div>
+            <p class="text-center font-handwriting text-lg text-romanticMuted mt-6">
+                Tip: You can tap the small camera icon to replace any photo with your real pictures!
+            </p>
+        </section>
+
+        <!-- ==========================================
+         THE LOVE NOTE JAR
+         ========================================== -->
+        <section class="max-w-xl mx-auto text-center">
+            <div
+                class="bg-gradient-to-b from-white/95 to-cream-50/90 rounded-3xl p-8 sm:p-10 border border-blush-200 shadow-cozy relative overflow-hidden">
+
+                <span class="text-xs uppercase tracking-widest text-warmGold font-semibold">Interactive Little
+                    Jar</span>
+                <h2 class="font-serif text-2xl sm:text-3xl font-bold text-romanticDark mt-1 mb-2">
+                    Reasons Why I Love You 🍯
+                </h2>
+                <p class="font-handwriting text-xl text-romanticMuted mb-6">
+                    A bottomless jar of thoughts reminding Anna why she is cherished.
+                </p>
+
+                <!-- Jar Graphic Container -->
+                <div class="relative w-36 h-44 mx-auto mb-6 flex flex-col items-center justify-center">
+                    <div class="w-20 h-5 bg-warmGold/40 rounded-t-lg border-2 border-warmGold/70"></div>
+                    <div
+                        class="w-32 h-36 bg-blush-100/50 rounded-b-3xl border-2 border-blush-300 relative backdrop-blur-sm shadow-inner flex flex-col items-center justify-center p-3 overflow-hidden">
+                        <!-- Floating Little Hearts Inside Jar -->
+                        <i
+                            class="fa-solid fa-heart text-blush-400 absolute text-xs animate-[pulse_2s_infinite] top-6 left-6"></i>
+                        <i
+                            class="fa-solid fa-heart text-blush-500 absolute text-sm animate-[pulse_1.5s_infinite] bottom-8 right-6"></i>
+                        <i class="fa-solid fa-heart text-roseGold absolute text-lg animate-[pulse_2.5s_infinite]"></i>
+                    </div>
+                </div>
+
+                <!-- Dynamic Note Display -->
+                <div id="love-note-box"
+                    class="min-h-[110px] flex flex-col justify-center items-center bg-cream-50 p-5 rounded-2xl border border-blush-200/80 mb-6 transition-all duration-300">
+                    <p id="love-note-text" class="font-serif italic text-lg sm:text-xl text-romanticDark leading-snug">
+                        "The way your eyes crinkle with genuine warmth when you laugh."
+                    </p>
+                    <span id="love-note-number" class="text-xs font-handwriting text-lg text-blush-500 font-bold mt-2">
+                        Reason #1 of 150
+                    </span>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <button onclick="pullLoveNote()"
+                        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-romanticDark hover:bg-black text-white font-medium shadow-md transition duration-200 transform hover:scale-105 active:scale-95 text-sm sm:text-base">
+                        <i class="fa-solid fa-sparkles text-warmGold"></i>
+                        <span>Pick another note from the jar</span>
+                    </button>
+                    <button onclick="openAllNotesModal()"
+                        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-blush-100 hover:bg-blush-200 text-blush-600 font-medium transition duration-200 border border-blush-300 shadow-sm text-sm">
+                        <i class="fa-solid fa-envelope-open-text"></i>
+                        <span>Read all 150 notes</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+         THEO'S BIRTHDAY LETTER
+         ========================================== -->
+        <section class="max-w-2xl mx-auto">
+            <div class="parchment-letter rounded-3xl p-8 sm:p-12 relative shadow-cozy border border-warmGold/40">
+
+                <!-- Wax Seal Badge -->
+                <div
+                    class="absolute -top-6 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full bg-gradient-to-tr from-blush-600 to-blush-400 border-2 border-warmGold shadow-md flex items-center justify-center text-white font-serif font-bold text-xl">
+                    A
+                </div>
+
+                <div class="text-center pt-4 mb-6">
+                    <span class="font-handwriting text-2xl text-warmGold font-semibold">Written with all my heart</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold text-romanticDark mt-1">To My Dearest Anna,
+                    </h2>
+                </div>
+
+                <div class="space-y-4 font-serif text-romanticDark text-base sm:text-lg leading-relaxed text-justify">
+                    <p>
+                        Happy Birthday, my love. Today is one of the most important days in the entire year—not just
+                        because it is your birthday, but because on this day, God brought you into this world.
+                    </p>
+                    <p>
+                        Ever since February 20, 2024, my world has had a different rhythm. You have this quiet, gentle
+                        way of turning ordinary days into something filled with warmth, safety, and light. Your kindness
+                        heals things you aren’t even trying to touch, and your laugh remains my absolute favorite sound
+                        on earth.
+                    </p>
+                    <p>
+                        I feel endlessly lucky. Lucky that of all the stories unfolding in the world, yours and mine
+                        decided to intertwine. Thank you for being my peace, my confidante, and my favorite adventure.
+                    </p>
+                    <p>
+                        I hope this new year of your life brings you as much happiness, serenity, and love as you give
+                        so freely to everyone around you. I promise to stand by you, celebrate you, and love you more
+                        with every tick of the clock.
+                    </p>
+                </div>
+
+                <div class="mt-8 text-right font-handwriting text-3xl sm:text-4xl text-romanticDark font-bold">
+                    Forever & always yours,<br />
+                    <span class="text-blush-500 font-serif italic text-2xl font-normal">Theo</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==========================================
+       MODAL: "OPEN WHEN" POPUP
+       ========================================== -->
+    <div id="letter-modal"
+        class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4 transition duration-300">
+        <div
+            class="parchment-letter max-w-lg w-full rounded-3xl p-6 sm:p-8 relative shadow-2xl border border-warmGold/40 animate-[fadeIn_0.3s_ease-out]">
+            <!-- Close Button -->
+            <button onclick="closeLetter()"
+                class="absolute top-4 right-4 w-9 h-9 rounded-full bg-cream-200 hover:bg-blush-200 text-romanticDark flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-4">
+                <span id="modal-tag" class="text-xs uppercase tracking-widest text-warmGold font-semibold">Special
+                    Note</span>
+                <h3 id="modal-title" class="font-serif text-2xl font-bold text-romanticDark mt-1">Birthday Morning</h3>
+            </div>
+
+            <div class="my-6">
+                <p id="modal-body"
+                    class="font-serif italic text-romanticDark text-base sm:text-lg leading-relaxed text-center">
+                    Letter content goes here.
+                </p>
+            </div>
+
+            <div class="text-center border-t border-blush-200 pt-4">
+                <p class="font-handwriting text-2xl text-blush-500">Love always, Theo</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+       MODAL: "ALL 150 REASONS" POPUP
+       ========================================== -->
+    <div id="all-notes-modal"
+        class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4 transition duration-300">
+        <div
+            class="parchment-letter max-w-2xl w-full max-h-[85vh] rounded-3xl p-6 sm:p-8 relative shadow-2xl border border-warmGold/40 flex flex-col animate-[fadeIn_0.3s_ease-out]">
+            <!-- Close Button -->
+            <button onclick="closeAllNotesModal()"
+                class="absolute top-4 right-4 w-9 h-9 rounded-full bg-cream-200 hover:bg-blush-200 text-romanticDark flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-4">
+                <span class="text-xs uppercase tracking-widest text-warmGold font-semibold">Every Single Memory & Reason</span>
+                <h3 class="font-serif text-2xl sm:text-3xl font-bold text-romanticDark mt-1">150 Reasons Why I Love You, Anna</h3>
+                <p class="font-handwriting text-lg text-romanticMuted">All 150 little thoughts written from Theo's heart</p>
+            </div>
+
+            <!-- Search box -->
+            <div class="mb-4">
+                <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-romanticMuted/50 text-xs"></i>
+                    <input id="notes-search-input" type="text"
+                        placeholder="Search notes (e.g. smile, coffee, hug, future)..."
+                        class="w-full pl-9 pr-4 py-2 text-sm rounded-xl border border-blush-200 bg-white/80 focus:outline-none focus:ring-2 focus:ring-blush-300 text-romanticDark placeholder-romanticMuted/60 transition"
+                        oninput="filterNotes(this.value)" />
+                </div>
+            </div>
+
+            <!-- Notes List Container -->
+            <div id="all-notes-list" class="overflow-y-auto space-y-2.5 pr-2 flex-1 scroll-smooth">
+                <!-- Injected via JavaScript -->
+            </div>
+
+            <div class="text-center border-t border-blush-200 pt-3 mt-3">
+                <p class="font-handwriting text-xl text-blush-500">Endlessly loved, now and forever — Theo</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Element (Ambient Romantic Acoustic Fallback) -->
+    <audio id="romantic-audio" loop preload="none">
+        <!-- Relaxing royalty-free acoustic track -->
+        <source
+            src="https://cdn.pixabay.com/download/audio/2022/05/16/audio_c8913b5275.mp3?filename=romantic-acoustic-guitar-112191.mp3"
+            type="audio/mp3">
+    </audio>
+
+</body>
+
+</html>

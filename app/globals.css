@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #FAF7F2;
+  color: #332325;
+  overflow-x: hidden;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+::selection {
+  background-color: #F9D4CD;
+  color: #332325;
+}
+
+/* Floating canvas in the background */
+#particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Washi tape styling */
+.washi-tape {
+  background: rgba(247, 214, 208, 0.85);
+  backdrop-filter: blur(2px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  position: absolute;
+  height: 22px;
+  width: 90px;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  z-index: 10;
+}
+
+.washi-tape-right {
+  transform: translateX(-50%) rotate(3deg);
+}
+
+/* Candle flicker animation */
+@keyframes flameFlicker {
+  0%, 100% {
+    transform: scale(1) rotate(-1deg);
+    filter: drop-shadow(0 0 8px rgba(255, 170, 40, 0.9));
+  }
+  25% {
+    transform: scale(1.08, 0.95) rotate(2deg);
+    filter: drop-shadow(0 0 14px rgba(255, 195, 60, 1));
+  }
+  50% {
+    transform: scale(0.95, 1.05) rotate(-2deg);
+    filter: drop-shadow(0 0 10px rgba(255, 150, 30, 0.8));
+  }
+  75% {
+    transform: scale(1.04, 1.02) rotate(1deg);
+    filter: drop-shadow(0 0 12px rgba(255, 185, 50, 0.95));
+  }
+}
+
+.flame-active {
+  animation: flameFlicker 1.4s ease-in-out infinite alternate;
+}
+
+.smoke {
+  opacity: 0;
+  transform: translateY(0) scale(0.6);
+  transition: all 1.2s ease-out;
+}
+
+.smoke.active {
+  opacity: 0.7;
+  transform: translateY(-28px) scale(1.5);
+}
+
+/* Subtle pulse for floating elements */
+@keyframes gentleFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+.animate-float {
+  animation: gentleFloat 5s ease-in-out infinite;
+}
+
+/* Envelope 3D tilt on hover */
+.envelope-card {
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.35s ease;
+}
+
+.envelope-card:hover {
+  transform: translateY(-8px) rotate(1deg);
+}
+
+/* Letter styling */
+.parchment-letter {
+  background: radial-gradient(circle at 50% 50%, #FFFDF9 0%, #FAF2E8 100%);
+  border: 1px solid rgba(201, 163, 94, 0.3);
+  box-shadow: inset 0 0 50px rgba(212, 175, 55, 0.05), 0 15px 40px rgba(61, 44, 46, 0.1);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF7F2;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E58A7A;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #D46957;
+}
+
